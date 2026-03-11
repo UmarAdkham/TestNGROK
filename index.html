@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Login Page</title>
+
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+
+		.login-container {
+			background: white;
+			padding: 30px;
+			border-radius: 8px;
+			width: 300px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+		h2 {
+			text-align: center;
+		}
+
+		input {
+			width: 100%;
+			padding: 8px;
+			margin-top: 5px;
+			margin-bottom: 15px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		button {
+			width: 100%;
+			padding: 10px;
+			background: #007bff;
+			border: none;
+			color: white;
+			font-size: 16px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background: #0056b3;
+		}
+
+		#message {
+			margin-top: 10px;
+			text-align: center;
+			font-weight: bold;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<div class="login-container">
+
+		<h2>Login</h2>
+
+		<form id="loginForm">
+
+			<label>Email</label>
+			<input type="text" id="email">
+
+			<label>Password</label>
+			<input type="password" id="password">
+
+			<button type="submit">Login</button>
+
+		</form>
+
+		<p id="message"></p>
+
+	</div>
+
+	<script>
+
+		const form = document.getElementById("loginForm");
+
+		form.addEventListener("submit", function (e) {
+
+			e.preventDefault();
+
+			let email = document.getElementById("email").value;
+			let password = document.getElementById("password").value;
+
+			const message = document.getElementById("message");
+
+			const correctEmail = "admin@test.com";
+			const correctPassword = "123456";
+
+			// remove spaces from start and end
+			email = email.trim();
+			password = password.trim();
+
+			// check empty fields
+			if (email === "" || password === "") {
+				message.innerText = "Please fill all fields";
+				return;
+			}
+
+			// email format check
+			if (!email.includes("@") || !email.includes(".")) {
+				message.innerText = "Invalid email format";
+				return;
+			}
+
+			// password length check
+			if (password.length < 4) {
+				message.innerText = "Password too short";
+				return;
+			}
+
+			// successful login
+			if (email === correctEmail && password === correctPassword) {
+				message.innerText = "Login successful";
+				return;
+			}
+
+			// correct email but wrong password
+			if (email === correctEmail) {
+				message.innerText = "Wrong password";
+				return;
+			}
+
+			// BUG: wrong email still says wrong password
+			message.innerText = "Wrong password";
+
+		});
+
+	</script>
+
+</body>
+
+</html>
