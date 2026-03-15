@@ -1,143 +1,151 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<title>Login Page</title>
+  <title>Register</title>
 
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #f2f2f2;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-		}
+  <style>
+    body{
+      font-family: Arial;
+      background:#f2f2f2;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+    }
 
-		.login-container {
-			background: white;
-			padding: 30px;
-			border-radius: 8px;
-			width: 300px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		}
+    .container{
+      background:white;
+      padding:25px;
+      border-radius:8px;
+      width:320px;
+      box-shadow:0 0 10px rgba(0,0,0,0.1);
+    }
 
-		h2 {
-			text-align: center;
-		}
+    input{
+      width:100%;
+      padding:8px;
+      margin:6px 0 12px 0;
+      border:1px solid #ccc;
+      border-radius:4px;
+    }
 
-		input {
-			width: 100%;
-			padding: 8px;
-			margin-top: 5px;
-			margin-bottom: 15px;
-			border: 1px solid #ccc;
-			border-radius: 4px;
-		}
+    button{
+      width:100%;
+      padding:10px;
+      background:#007bff;
+      border:none;
+      color:white;
+      border-radius:4px;
+      cursor:pointer;
+    }
 
-		button {
-			width: 100%;
-			padding: 10px;
-			background: #007bff;
-			border: none;
-			color: white;
-			font-size: 16px;
-			border-radius: 4px;
-			cursor: pointer;
-		}
+    button:hover{
+      background:#0056b3;
+    }
 
-		button:hover {
-			background: #0056b3;
-		}
-
-		#message {
-			margin-top: 10px;
-			text-align: center;
-			font-weight: bold;
-		}
-	</style>
+    #message{
+      margin-top:10px;
+      font-weight:bold;
+      text-align:center;
+    }
+  </style>
 
 </head>
 
 <body>
 
-	<div class="login-container">
+<div class="container">
 
-		<h2>Login</h2>
+<h2>Register</h2>
 
-		<form id="loginForm">
+<form id="registerForm">
 
-			<label>Email</label>
-			<input type="text" id="email">
+<label>Name</label>
+<input type="text" id="name">
 
-			<label>Password</label>
-			<input type="password" id="password">
+<label>Email</label>
+<input type="text" id="email">
 
-			<button type="submit">Login</button>
+<label>Password</label>
+<input type="password" id="password">
 
-		</form>
+<label>Confirm Password</label>
+<input type="password" id="confirmPassword">
 
-		<p id="message"></p>
+<label>Age</label>
+<input type="number" id="age">
 
-	</div>
+<label>
+<input type="checkbox" id="terms">
+I agree to terms
+</label>
 
-	<script>
+<button type="submit">Register</button>
 
-		const form = document.getElementById("loginForm");
+</form>
 
-		form.addEventListener("submit", function (e) {
+<p id="message"></p>
 
-			e.preventDefault();
+</div>
 
-			let email = document.getElementById("email").value;
-			let password = document.getElementById("password").value;
+<script>
 
-			const message = document.getElementById("message");
+const form = document.getElementById("registerForm");
 
-			const correctEmail = "admin@test.com";
-			const correctPassword = "123456";
+form.addEventListener("submit", function(e){
 
-			// remove spaces from start and end
-			email = email.trim();
-			password = password.trim();
+  e.preventDefault();
 
-			// check empty fields
-			if (email === "" || password === "") {
-				message.innerText = "Please fill all fields";
-				return;
-			}
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const age = document.getElementById("age").value;
+  const terms = document.getElementById("terms").checked;
 
-			// email format check
-			if (!email.includes("@") || !email.includes(".")) {
-				message.innerText = "Invalid email format";
-				return;
-			}
+  const message = document.getElementById("message");
 
-			// password length check
-			if (password.length < 4) {
-				message.innerText = "Password too short";
-				return;
-			}
+  // required fields
+  if(name === "" || email === "" || password === ""){
+    message.innerText = "Please fill required fields";
+    return;
+  }
 
-			// successful login
-			if (email === correctEmail && password === correctPassword) {
-				message.innerText = "Login successful";
-				return;
-			}
+  // email validation
+  if(!email.includes("@")){
+    message.innerText = "Invalid email";
+    return;
+  }
 
-			// correct email but wrong password
-			if (email === correctEmail) {
-				message.innerText = "Wrong password";
-				return;
-			}
+  // password match
+  if(password !== confirmPassword){
+    message.innerText = "Passwords do not match";
+    return;
+  }
 
-			// BUG: wrong email still says wrong password
-			message.innerText = "Wrong password";
+  // password length
+  if(password.length < 6){
+    message.innerText = "Password too short";
+    return;
+  }
 
-		});
+  // BUG 1: age validation incorrect
+  if(age < 18){
+    message.innerText = "Age accepted";
+  }
 
-	</script>
+  // BUG 2: checkbox validation reversed
+  if(terms){
+    message.innerText = "You must accept terms";
+    return;
+  }
+
+  // success
+  message.innerText = "Registration successful";
+
+});
+
+</script>
 
 </body>
-
 </html>
